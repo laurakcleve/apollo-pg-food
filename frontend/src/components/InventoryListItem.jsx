@@ -5,24 +5,26 @@ import moment from 'moment';
 
 import ItemDetails from './ItemDetails';
 
-const StyledListItem = styled.li`
+const ListItem = styled.li`
+  width: 100%;
+  margin-bottom: 10px;
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 2px 2px 10px #e8e8e8;
-  width: 100%;
-
-  .title-row {
-    display: flex;
-    padding: 20px;
-  }
 `;
 
-const StyledItemName = styled.div`
+const TitleRow = styled.div`
+  display: flex;
+  padding: 20px;
+`;
+
+const ItemName = styled.div`
   flex: 1;
 `;
 
-const StyledExpiration = styled.div`
-
+const Expiration = styled.div`
+  font-size: 12px;
+  font-weight: 500;
 `;
 
 const InventoryListItem = ({ inventoryItem }) => {
@@ -33,19 +35,19 @@ const InventoryListItem = ({ inventoryItem }) => {
   };
 
   return (
-    <StyledListItem>
-      <div className="title-row" onClick={click}>
-        <StyledItemName>
+    <ListItem>
+      <TitleRow onClick={click}>
+        <ItemName>
           {inventoryItem.item.name}
-        </StyledItemName>
+        </ItemName>
 
-        <StyledExpiration>
+        <Expiration>
           {moment(Number(inventoryItem.expiration)).fromNow()}
-        </StyledExpiration>
-      </div>
+        </Expiration>
+      </TitleRow>
 
       {open && <ItemDetails inventoryItem={inventoryItem} />}
-    </StyledListItem>
+    </ListItem>
   );
 };
 

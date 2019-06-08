@@ -9,36 +9,41 @@ const GET_INVENTORY = gql`
   query GetInventory {
     inventoryItems {
       id
+      amount
       add_date
       expiration
       item {
         id
         name
+        countsAs {
+          id
+          name
+        }
       }
     }
   }
 `;
 
 const StyledInventory = styled.div`
+  display: flex;
   max-width: 900px;
   margin: 0 auto;
-  display: flex;
 `;
 
-const StyledSidebar = styled.div`
+const Sidebar = styled.div`
   width: 280px;
   height: 1000px;
   background-color: #fff;
 `;
 
-const StyledItemList = styled.div`
+const ItemList = styled.div`
   width: 100%;
   padding: 30px;
 
   ul {
-    list-style-type: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    list-style-type: none;
   }
 `;
 
@@ -50,15 +55,15 @@ const Inventory = () => (
 
       return (
         <StyledInventory>
-          <StyledSidebar />
-          <StyledItemList>
+          <Sidebar />
+          <ItemList>
             <ul>
               {data.inventoryItems
                 && data.inventoryItems.map(inventoryItem => (
                   <InventoryListItem inventoryItem={inventoryItem} />
                 ))}
             </ul>
-          </StyledItemList>
+          </ItemList>
         </StyledInventory>
       );
     }}
