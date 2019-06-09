@@ -48,19 +48,28 @@ class itemsAPI extends DataSource {
   getItemDishes({ itemID }) {
     return db({ dish: 'item' })
       .select('dish.id', 'dish.name')
-      .innerJoin('item_set', 'item_set.parent_item_id', 'dish.id')
-      .innerJoin('item_set_item', 'item_set_item.item_set_id', 'item_set.id')
-      .innerJoin({ ingredient: 'item' }, 'ingredient.id', 'item_set_item.item_id')
-      .where('ingredient.id', itemID);
+      .innerJoin('ingredient_set', 'ingredient_set.parent_item_id', 'dish.id')
+      .innerJoin('ingredient', 'ingredient.ingredient_set_id', 'ingredient_set.id')
+      .innerJoin(
+        { ingredientItem: 'item' },
+        'ingredientItem.id',
+        'ingredient.item_id'
+      )
+      .where('ingredientItem.id', itemID);
   }
 
-  getItemIngredients({ itemID }) {
-    return db({ ingredient: 'item' })
-      .select('ingredient.id', 'ingredient.name')
-      .innerJoin('item_set_item', 'item_set_item.item_id', 'ingredient.id')
-      .innerJoin('item_set', 'item_set.id', 'item_set_item.item_set_id')
-      .innerJoin({ dish: 'item' }, 'dish.id', 'item_set.parent_item_id')
-      .where('dish.id', itemID);
+  getItemIngredientSets({ itemID }) {
+    return db('ingredient_set')
+      .select('ingredient_set.id')
+      .innerJoin('item', 'item.id', 'ingredient_set.parent_item_id')
+      .where('item.id', itemID);
+  }
+
+  getIngredients({ ingredientSetID }) {
+    return db('item')
+      .select('item.id', 'item.name')
+      .innerJoin('ingredient', 'ingredient.item_id', 'item.id')
+      .where('ingredient_set_id', ingredientSetID);
   }
 }
 

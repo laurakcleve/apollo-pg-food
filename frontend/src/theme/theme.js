@@ -11,9 +11,12 @@ export default {
     darkestGrey: '#6e6e6e',
     yellowGreen: '#e6efc2',
     darkYellowGreen: '#8aa033',
-    green: '#a2d5ac',
+    green: '#b0deb9',
+    darkGreen: '#63a971',
+    lightGreen: '#e7f5ea',
     teal: '#3aafa9',
     blue: '#557c83',
+    lightBlue: '#e4f2f5',
     brown: '#5b5150',
   },
 };

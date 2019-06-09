@@ -19,6 +19,17 @@ const GET_INVENTORY = gql`
           id
           name
         }
+        dishes {
+          id
+          name
+        }
+        ingredientSets {
+          id
+          ingredients {
+            id
+            name
+          }
+        }
       }
     }
   }

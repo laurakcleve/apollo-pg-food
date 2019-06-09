@@ -45,52 +45,121 @@ const EditButton = styled.button`
   text-transform: uppercase;
 `;
 
+const DishesAndIngredients = styled.div`
+  display: flex;
+`;
+
+const ItemDishes = styled.div`
+  flex: 0 1 200px;
+  padding: 0 20px 20px 20px;
+
+  li {
+    padding: 5px;
+    border-radius: 4px;
+    background-color: ${props => props.theme.colors.lightBlue};
+
+    &::first-letter {
+      text-transform: uppercase
+    }
+  }
+`;
+
+const ItemIngredients = styled.div`
+  flex: 0 1 200px;
+  padding: 0 20px 20px 20px;
+  
+  li {
+    padding: 5px;
+    border-radius: 4px;
+    background-color: ${props => props.theme.colors.lightGreen};
+  }
+`;
+
 const ItemDetails = ({ inventoryItem }) => (
-  <StyledItemDetails>
-    <AddDate>
-      <DetailTitle>
-        Added
-      </DetailTitle>
+  <>
+    <StyledItemDetails>
+      <AddDate>
+        <DetailTitle>
+          Added
+        </DetailTitle>
 
-      <DetailContent>
-        {moment(Number(inventoryItem.add_date)).format('M/D/YY')}
-      </DetailContent>
-    </AddDate>
+        <DetailContent>
+          {moment(Number(inventoryItem.add_date)).format('M/D/YY')}
+        </DetailContent>
+      </AddDate>
 
-    <CountsAs>
-      {inventoryItem.item.countsAs.length > 0 && (
-        <>
+      <CountsAs>
+        {inventoryItem.item.countsAs.length > 0 && (
+          <>
+            <DetailTitle>
+              Counts as
+            </DetailTitle>
+
+            <DetailContent>
+              {inventoryItem.item.countsAs.map(genericItem => (
+                <span>{genericItem.name}</span>
+              ))}
+            </DetailContent>
+          </>
+        )}
+      </CountsAs>
+
+      <Amount>
+        {inventoryItem.amount && (
+          <>
+            <DetailTitle>
+              Amount
+            </DetailTitle>
+
+            <DetailContent>
+              {inventoryItem.amount}
+            </DetailContent>
+          </>
+        )}
+      </Amount>
+
+      <EditButton>
+        Edit
+      </EditButton>
+    </StyledItemDetails>
+
+    <DishesAndIngredients>
+      {inventoryItem.item.dishes.length > 0 && (
+        <ItemDishes>
           <DetailTitle>
-            Counts as
+            Use in:
           </DetailTitle>
-
-          <DetailContent>
-            {inventoryItem.item.countsAs.map(genericItem => (
-              <span>{genericItem.name}</span>
+          <ul>
+            {inventoryItem.item.dishes.map(dish => (
+              <li>
+                {dish.name}
+              </li>
             ))}
-          </DetailContent>
-        </>
+          </ul>
+        </ItemDishes>
       )}
-    </CountsAs>
 
-    <Amount>
-      {inventoryItem.amount && (
-        <>
+      {inventoryItem.item.ingredientSets.length > 0 && (
+        <ItemIngredients>
           <DetailTitle>
-            Amount
+            Ingredients:
           </DetailTitle>
-
-          <DetailContent>
-            {inventoryItem.amount}
-          </DetailContent>
-        </>
+          <ul>
+            {inventoryItem.item.ingredientSets.map(ingredientSet => (
+              <li>
+                {ingredientSet.ingredients.map(ingredient => (
+                  <span>
+                    {ingredient.name}
+                  </span>
+                ))}
+              </li>
+            ))}
+          </ul>
+        </ItemIngredients>
       )}
-    </Amount>
 
-    <EditButton>
-      Edit
-    </EditButton>
-  </StyledItemDetails>
+    </DishesAndIngredients>
+  </>
 );
 
 ItemDetails.propTypes = {

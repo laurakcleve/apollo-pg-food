@@ -6,6 +6,8 @@ const typeDefs = gql`
     inventoryItem(id: ID!): InventoryItem
     items: [Item]!
     item(id: ID!): Item
+    dishes: [Dish]!
+    dish(id: ID!): Dish
   }
 
   type InventoryItem {
@@ -22,8 +24,23 @@ const typeDefs = gql`
     category: ItemCategory
     dishTags: [DishTag]
     countsAs: [Item]
+    dishes: [Dish]
+    ingredientSets: [IngredientSet]
+  }
+
+  type Dish {
+    id: ID!
+    name: String!
+    category: ItemCategory
+    dishTags: [DishTag]
+    countsAs: [Item]
     dishes: [Item]
-    ingredients: [Item]
+    ingredientSets: [IngredientSet]
+  }
+
+  type IngredientSet {
+    id: ID!
+    ingredients: [Item]!
   }
 
   type ItemCategory {
