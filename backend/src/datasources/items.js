@@ -55,7 +55,23 @@ class itemsAPI extends DataSource {
         'ingredientItem.id',
         'ingredient.item_id'
       )
-      .where('ingredientItem.id', itemID);
+      .where('ingredientItem.id', itemID)
+      .orWhereIn(
+        'ingredientItem.id',
+        db({ genericItem: 'item' })
+          .select('genericItem.id')
+          .innerJoin(
+            'item_counts_as',
+            'item_counts_as.generic_item_id',
+            'genericItem.id'
+          )
+          .innerJoin(
+            { specificItem: 'item' },
+            'specificItem.id',
+            'item_counts_as.specific_item_id'
+          )
+          .where('specificItem.id', itemID)
+      );
   }
 
   getItemIngredientSets({ itemID }) {

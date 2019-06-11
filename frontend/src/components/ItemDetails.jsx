@@ -54,6 +54,7 @@ const ItemDishes = styled.div`
   padding: 0 20px 20px 20px;
 
   li {
+    margin-bottom: 5px;
     padding: 5px;
     border-radius: 4px;
     background-color: ${props => props.theme.colors.lightBlue};
@@ -69,6 +70,7 @@ const ItemIngredients = styled.div`
   padding: 0 20px 20px 20px;
   
   li {
+    margin-bottom: 5px;
     padding: 5px;
     border-radius: 4px;
     background-color: ${props => props.theme.colors.lightGreen};
